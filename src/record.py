@@ -1,5 +1,5 @@
 import cv2
-import cnn_gesture_detection_api
+import api
 import argparse
 
 # args
@@ -32,7 +32,7 @@ while True:
     if key == 32:
         print("setting first frame")
         cv2.imshow("First frame", frame)
-        subtractor = cnn_gesture_detection_api.BackgroundSubstraction(frame)
+        subtractor = api.BackgroundSubstraction(frame)
     if key == 27:
         break
 

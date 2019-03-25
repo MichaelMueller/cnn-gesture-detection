@@ -35,9 +35,9 @@ import numpy as np
 import skimage.draw
 
 # Root directory of the project
-import api2
+import api
 
-ROOT_DIR = os.path.abspath("../../assets/Mask_RCNN")
+ROOT_DIR = os.path.abspath("../assets/Mask_RCNN")
 
 # Import Mask RCNN
 sys.path.append(ROOT_DIR)  # To find local version of the library
@@ -101,8 +101,8 @@ class HandsDataset(utils.Dataset):
             class_name = os.path.basename(class_dir)
             self.add_class("HandsDepthDataset", i, class_name)
 
-            for image_fpath in api2.process_dir(class_dir,
-                                                api2.common_image_file_extensions):
+            for image_fpath in api.process_dir(class_dir,
+                                                api.common_image_file_extensions):
                 self.add_image(
                     "HandsDepthDataset",
                     image_id=image_fpath,  # use file name as a unique image id
@@ -183,7 +183,7 @@ def detect_and_color_splash(model, image_path=None, video_path=None):
     if image_path:
         images = []
         if os.path.isdir(image_path):
-            for path in api2.process_dir(image_path, api2.common_image_file_extensions):
+            for path in api.process_dir(image_path, api.common_image_file_extensions):
                 images.append(path)
         else:
             images.append(image_path)
