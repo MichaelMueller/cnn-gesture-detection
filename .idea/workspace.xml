@@ -2,12 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b679bef9-259d-43e9-9d16-94123e714d99" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/egohands_mask_creator.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/record_depth_cam.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/cnn-gesture-detection.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/cnn-gesture-detection.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/cnn_gesture_detection_api.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/api.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/hands_mask_rcnn.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/hands_mask_rcnn.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/record.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/record.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -22,7 +19,9 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor />
+              <first_editor>
+                <caret column="23" selection-start-column="23" selection-end-column="23" />
+              </first_editor>
               <second_editor />
             </state>
           </provider>
@@ -45,7 +44,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/hands_mask_rcnn.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3054">
+            <state relative-caret-position="3540">
               <caret line="185" column="56" selection-start-line="185" selection-start-column="56" selection-end-line="185" selection-end-column="56" />
               <folding>
                 <element signature="e#1060#1069#0" expanded="true" />
@@ -54,58 +53,13 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/record.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="380">
-              <caret line="19" column="33" selection-start-line="19" selection-start-column="33" selection-end-line="19" selection-end-column="33" />
+            <state relative-caret-position="352">
+              <caret line="55" column="35" selection-start-line="55" selection-start-column="35" selection-end-line="55" selection-end-column="35" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/egohands_mask_creator.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="55" column="74" selection-start-line="55" selection-start-column="74" selection-end-line="55" selection-end-column="74" />
-              <folding>
-                <element signature="e#0#10#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/.PyCharmCE2018.3/system/python_stubs/1018612532/numpy/core/_multiarray_umath.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-50">
-              <caret line="9019" column="8" selection-start-line="9019" selection-start-column="8" selection-end-line="9019" selection-end-column="8" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/api.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="181">
-              <caret line="47" selection-start-line="47" selection-end-line="47" />
-              <folding>
-                <element signature="e#0#14#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/record_depth_cam.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="102" column="49" selection-start-line="102" selection-start-column="49" selection-end-line="102" selection-end-column="49" />
-              <folding>
-                <element signature="e#27#42#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -144,13 +98,13 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/src/record.py" />
         <option value="$PROJECT_DIR$/src/move_old_images.py" />
         <option value="$PROJECT_DIR$/src/record_depth_cam.py" />
         <option value="$PROJECT_DIR$/src/cnn_gesture_detection_api.py" />
         <option value="$PROJECT_DIR$/src/hands_mask_rcnn.py" />
         <option value="$PROJECT_DIR$/src/api.py" />
         <option value="$PROJECT_DIR$/src/egohands_mask_creator.py" />
+        <option value="$PROJECT_DIR$/src/record.py" />
       </list>
     </option>
   </component>
@@ -165,7 +119,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -187,6 +140,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -210,7 +164,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.egohands_mask_creator">
+  <component name="RunManager" selected="Python.record">
     <configuration name="egohands_mask_creator" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="cnn-gesture-detection" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -245,7 +199,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/record.py" />
-      <option name="PARAMETERS" value="hand --exposure -5" />
+      <option name="PARAMETERS" value="hand ../var/hands --exposure -5 --width 1280 --height 720" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -295,15 +249,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24907456" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24868283" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32887402" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.39910814" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32827735" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39910814" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -343,10 +296,17 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/move_old_images.py" />
+    <entry file="file://$PROJECT_DIR$/src/record_depth_cam.py" />
+    <entry file="file://$USER_HOME$/.PyCharmCE2018.3/system/python_stubs/1018612532/numpy/core/_multiarray_umath.py" />
+    <entry file="file://$PROJECT_DIR$/src/api.py" />
+    <entry file="file://$PROJECT_DIR$/src/egohands_mask_creator.py" />
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor />
+          <first_editor>
+            <caret column="23" selection-start-column="23" selection-end-column="23" />
+          </first_editor>
           <second_editor />
         </state>
       </provider>
@@ -361,16 +321,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/move_old_images.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="17" column="52" selection-start-line="17" selection-start-column="52" selection-end-line="17" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/hands_mask_rcnn.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3054">
+        <state relative-caret-position="3540">
           <caret line="185" column="56" selection-start-line="185" selection-start-column="56" selection-end-line="185" selection-end-column="56" />
           <folding>
             <element signature="e#1060#1069#0" expanded="true" />
@@ -380,45 +333,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/record.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="19" column="33" selection-start-line="19" selection-start-column="33" selection-end-line="19" selection-end-column="33" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/record_depth_cam.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="102" column="49" selection-start-line="102" selection-start-column="49" selection-end-line="102" selection-end-column="49" />
-          <folding>
-            <element signature="e#27#42#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.PyCharmCE2018.3/system/python_stubs/1018612532/numpy/core/_multiarray_umath.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-50">
-          <caret line="9019" column="8" selection-start-line="9019" selection-start-column="8" selection-end-line="9019" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/api.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="181">
-          <caret line="47" selection-start-line="47" selection-end-line="47" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/egohands_mask_creator.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="55" column="74" selection-start-line="55" selection-start-column="74" selection-end-line="55" selection-end-column="74" />
+        <state relative-caret-position="352">
+          <caret line="55" column="35" selection-start-line="55" selection-start-column="35" selection-end-line="55" selection-end-column="35" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
