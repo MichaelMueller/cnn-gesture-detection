@@ -43,15 +43,27 @@ def setup_logging(log_level, log_file=None):
     kwargs["handlers"] = handlers
     logging.basicConfig(**kwargs)
 
+def find_biggest_contour(thresholded_image):
+    contours, hierarchy = cv2.findContours(thresholded_image.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+
+    if len(contours) != 0:
+        # draw in blue the contours that were founded
+        #cv2.drawContours(output, contours, -1, 255, 3)
+
+        # find the biggest area
+        c = max(contours, key=cv2.contourArea)
+        return c
+    return None
+
 def create_mask_from_contour(source_image, contours, binary_value=255):
     mask = np.zeros((source_image.shape[0], source_image.shape[1], 1), np.uint8)
     cv2.drawContours(mask, contours, -1, binary_value, -1)
     return mask
 
 class BackgroundSubstraction:
-    threshold_val = 35
-    gaussian_blur_size = 3
-    opening_kernel_size = 3
+    threshold_val = 15
+    gaussian_blur_size = 7
+    opening_kernel_size = 13
 
     def __init__(self, first_frame, equalize_hist=True):
         self.first_gray_frame = cv2.cvtColor(first_frame, cv2.COLOR_BGR2GRAY)

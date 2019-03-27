@@ -35,14 +35,20 @@ while True:
     mask = None
     if subtractor:
         mask = subtractor.apply(frame)
-        cv2.imshow("mask", mask)
+        biggest_contour = api.find_biggest_contour(mask)
+        if biggest_contour is not None:
+            mask = api.create_mask_from_contour(mask, [biggest_contour])
+            # cv2.imshow("mask_with_contour", mask_with_contour)
+            cv2.imshow("mask", mask)
+        else:
+            mask = None
 
     key = cv2.waitKeyEx(30)
     if key == 102:
         print("setting first frame")
-        cv2.imshow("First frame", frame)
+        #cv2.imshow("First frame", frame)
         subtractor = api.BackgroundSubstraction(frame)
-    elif key == 32 and mask:
+    elif key == 32 and mask is not None:
         if not os.path.isdir(args.output_dir):
             os.makedirs(args.output_dir)
         i = i + 1
