@@ -3,6 +3,9 @@ import logging
 import sys
 import tempfile
 
+from keras.models import Sequential
+from keras.layers import Dense, Conv2D, MaxPooling2D, Dropout, Flatten
+from keras.optimizers import Adam
 import cv2
 import numpy as np
 import os
@@ -87,12 +90,12 @@ def mask_image(frame, mask):
     return result
 
 
-def draw_text(img, text, pos=(10, 10), bg_color=(255, 255, 255)):
+def draw_text(img, text, pos=(20, 20), bg_color=(255, 255, 255)):
     font_face = cv2.QT_FONT_NORMAL
     scale = 0.5
     color = (0, 0, 0)
     thickness = cv2.FILLED
-    margin = 2
+    margin = 10
 
     txt_size = cv2.getTextSize(text, font_face, scale, thickness)
 
@@ -147,7 +150,8 @@ class HsvSegmentation:
             mask = cv2.inRange(hsv, lower, upper)
         return mask
 
-def create_model(image_size):
+def create_model(image_size, nClasses):
+
     vgg_base = VGG16(weights='imagenet', include_top=False, input_shape=(image_size, image_size, 3))
     optimizer1 = optimizers.Adam()
 
@@ -160,7 +164,7 @@ def create_model(image_size):
     x = Dense(128, activation='relu', name='fc3')(x)
     x = Dropout(0.5)(x)
     x = Dense(64, activation='relu', name='fc4')(x)
-    predictions = Dense(4, activation='softmax')(x)
+    predictions = Dense(nClasses, activation='softmax')(x)
 
     model = Model(inputs=base_model.input, outputs=predictions)
 
@@ -168,10 +172,14 @@ def create_model(image_size):
     for layer in base_model.layers:
         layer.trainable = False
 
-    callbacks_list = [keras.callbacks.EarlyStopping(monitor='val_acc', patience=3, verbose=1)]
-
     model.compile(optimizer='Adam', loss='categorical_crossentropy', metrics=['accuracy'])
     return model
+
+def resize_image_if_necessary(img, image_size):
+    if img.shape[1] != image_size or img.shape[0] != image_size:
+        # print("resizing image to %sx%s" % (expected_input_size[0], expected_input_size[1]))
+        img = cv2.resize(img, (image_size, image_size))
+    return img
 
 def load_images_masks(dpath, use_masks=False, image_size=128, divisor=255.0):
     images =[]
@@ -186,7 +194,6 @@ def load_images_masks(dpath, use_masks=False, image_size=128, divisor=255.0):
             continue
 
         img = cv2.imread(fpath)
-        input_size = [img.shape[1], img.shape[0]]
 
         if img.shape[1] != image_size or img.shape[0] != image_size:
             #print("resizing image to %sx%s" % (expected_input_size[0], expected_input_size[1]))
@@ -199,7 +206,7 @@ def load_images_masks(dpath, use_masks=False, image_size=128, divisor=255.0):
     labels = np.array(labels)
     if divisor:
         images = images / divisor
-    return images, labels
+    return images, to_categorical(labels)
 
 def get_img_info(fpath):
     parts = fpath.split('.')
