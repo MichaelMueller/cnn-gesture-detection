@@ -67,7 +67,7 @@ def setup_logging(log_level, log_file=None):
 
 
 def find_biggest_contour(thresholded_image):
-    contours, hierarchy = cv2.findContours(thresholded_image.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+    _, contours, hierarchy = cv2.findContours(thresholded_image.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
 
     if len(contours) != 0:
         # draw in blue the contours that were founded
