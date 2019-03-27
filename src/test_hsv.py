@@ -1,20 +1,20 @@
 import cv2
+import numpy
+
 import api
 import argparse
 import os
 
 # args
 parser = argparse.ArgumentParser(
-    description='Recorder for training data.')
-parser.add_argument('output_dir', type=str, help='the directory containing the recorded files')
-parser.add_argument('num_classes', type=int, help='the number of classes to learn for the network')
+    description='tester for training data.')
+parser.add_argument('weights', type=str, help='weights')
+parser.add_argument('num_classes', type=int, default=None, help='num_classes')
+parser.add_argument('image_size', type=int, default=128, help='image_size')
 parser.add_argument('--cam', type=int, default=0, help='the number of the camera to use')
 parser.add_argument('--width', type=int, default=0, help='the number of the camera to use')
 parser.add_argument('--height', type=int, default=0, help='the number of the camera to use')
 parser.add_argument('--exposure', type=int, default=-7, help='the exposure level')
-parser.add_argument('--timeout', type=int, default=500, help='timeout between Frames in milliseconds')
-parser.add_argument('--clean', action='store_true', default=False,
-                    help='whether to remove train and test dir before running')
 args = parser.parse_args()
 
 # cam settings
@@ -46,6 +46,12 @@ cv2.createTrackbar('h2', 'Controls', hsv_segmentation.col2[0], 179, nothing)
 cv2.createTrackbar('s2', 'Controls', hsv_segmentation.col2[1], 255, nothing)
 cv2.createTrackbar('v2', 'Controls', hsv_segmentation.col2[2], 255, nothing)
 
+model = api.create_model(args.image_size, args.num_classes)
+model.compile(optimizer='Adam', loss='categorical_crossentropy', metrics=['accuracy'])
+if os.path.exists(args.weights):
+    print("loading %s"%args.weights)
+    model.load_weights(args.weights)
+
 while True:
     try:
         # read
@@ -72,8 +78,12 @@ while True:
 
         # write status
         if mask is not None:
+            mask_resized = api.resize_image_if_necessary(mask, args.image_size)
+            mask_resized_color = cv2.cvtColor(mask_resized, cv2.COLOR_GRAY2BGR)
+            predictions = model.predict(numpy.array([mask_resized_color]))
+            predicted_class_idx = int(numpy.argmax(predictions[0]))
             frame = api.mask_image(frame, mask)
-        api.draw_text(frame, "current class: {}".format(curr_class_idx))
+            api.draw_text(frame, "predicted class: {}".format(predicted_class_idx))
 
         # show images
         cv2.imshow("Frame", frame)
@@ -82,24 +92,6 @@ while True:
 
         # process keys
         key = cv2.waitKeyEx(30)
-        if key == 99:  # c
-            curr_class_idx = curr_class_idx + 1
-            if curr_class_idx > args.num_classes:
-                curr_class_idx = 0
-        elif key == 32 and mask is not None:
-            if not os.path.isdir(args.output_dir):
-                os.makedirs(args.output_dir)
-            curr_class = str(curr_class_idx)
-            i = i + 1
-            img_path = os.path.join(args.output_dir, str(i) + "." + curr_class + ".png")
-            mask_path = os.path.join(args.output_dir, str(i) + "." + curr_class + ".mask.png")
-            while os.path.exists(img_path) or os.path.exists(mask_path):
-                i = i + 1
-                img_path = os.path.join(args.output_dir, str(i) + curr_class + ".png")
-                mask_path = os.path.join(args.output_dir, str(i) + curr_class + ".mask.png")
-            cv2.imwrite(img_path, frame_orig)
-            cv2.imwrite(mask_path, mask)
-            hsv_segmentation.save()
         if key == 27:
             break
     except Exception as e:

@@ -178,8 +178,9 @@ def create_model(image_size, nClasses):
 def resize_image_if_necessary(img, image_size):
     if img.shape[1] != image_size or img.shape[0] != image_size:
         # print("resizing image to %sx%s" % (expected_input_size[0], expected_input_size[1]))
-        img = cv2.resize(img, (image_size, image_size))
-    return img
+        return cv2.resize(img, (image_size, image_size))
+    else:
+        return img.copy()
 
 def load_images_masks(dpath, use_masks=False, image_size=128, divisor=255.0):
     images =[]
@@ -200,7 +201,7 @@ def load_images_masks(dpath, use_masks=False, image_size=128, divisor=255.0):
             img = cv2.resize(img, (image_size, image_size))
 
         images.append(img)
-        labels.append(int(class_name) - 1)
+        labels.append(int(class_name))
 
     images = np.array(images)
     labels = np.array(labels)
