@@ -1,0 +1,1 @@
+call "C:\Program Files\mRayClient\bin\mRayClient.exe" --hotkey
