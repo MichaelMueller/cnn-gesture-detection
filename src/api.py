@@ -3,6 +3,7 @@ import logging
 import sys
 import tempfile
 
+import scipy
 from keras.models import Sequential
 from keras.layers import Dense, Conv2D, MaxPooling2D, Dropout, Flatten
 from keras.optimizers import Adam
@@ -150,8 +151,8 @@ class HsvSegmentation:
             mask = cv2.inRange(hsv, lower, upper)
         return mask
 
-def create_model(image_size, nClasses):
 
+def create_model(image_size, nClasses):
     vgg_base = VGG16(weights='imagenet', include_top=False, input_shape=(image_size, image_size, 3))
     optimizer1 = optimizers.Adam()
 
@@ -175,6 +176,7 @@ def create_model(image_size, nClasses):
     model.compile(optimizer='Adam', loss='categorical_crossentropy', metrics=['accuracy'])
     return model
 
+
 def resize_image_if_necessary(img, image_size):
     if img.shape[1] != image_size or img.shape[0] != image_size:
         # print("resizing image to %sx%s" % (expected_input_size[0], expected_input_size[1]))
@@ -182,8 +184,9 @@ def resize_image_if_necessary(img, image_size):
     else:
         return img.copy()
 
+
 def load_images_masks(dpath, use_masks=False, image_size=128, divisor=255.0):
-    images =[]
+    images = []
     labels = []
     for fpath in process_dir(dpath, common_image_file_extensions):
         class_name, is_mask = get_img_info(fpath)
@@ -197,7 +200,7 @@ def load_images_masks(dpath, use_masks=False, image_size=128, divisor=255.0):
         img = cv2.imread(fpath)
 
         if img.shape[1] != image_size or img.shape[0] != image_size:
-            #print("resizing image to %sx%s" % (expected_input_size[0], expected_input_size[1]))
+            # print("resizing image to %sx%s" % (expected_input_size[0], expected_input_size[1]))
             img = cv2.resize(img, (image_size, image_size))
 
         images.append(img)
@@ -208,6 +211,7 @@ def load_images_masks(dpath, use_masks=False, image_size=128, divisor=255.0):
     if divisor:
         images = images / divisor
     return images, to_categorical(labels)
+
 
 def get_img_info(fpath):
     parts = fpath.split('.')
@@ -259,3 +263,55 @@ class BackgroundSubstraction:
             difference = cv2.morphologyEx(difference, cv2.MORPH_OPEN, kernel)
 
         return difference
+
+
+class OpenCvHsvControls:
+    col1 = (0, 0, 0)
+    col2 = (179, 255, 255)
+
+    def __init__(self, window_name="Hsv Controls"):
+        self.window_name = window_name
+
+    def create(self):
+        def nothing(x):
+            pass
+
+        cv2.namedWindow(self.window_name, cv2.WINDOW_AUTOSIZE)
+
+        # Creating track bar
+        cv2.createTrackbar('h', self.window_name, self.col1[0], 179, nothing)
+        cv2.createTrackbar('s', self.window_name, self.col1[1], 255, nothing)
+        cv2.createTrackbar('v', self.window_name, self.col1[2], 255, nothing)
+        cv2.createTrackbar('h2', self.window_name, self.col2[0], 179, nothing)
+        cv2.createTrackbar('s2', self.window_name, self.col2[1], 255, nothing)
+        cv2.createTrackbar('v2', self.window_name, self.col2[2], 255, nothing)
+
+    def get_values(self):
+        h = cv2.getTrackbarPos('h', self.window_name)
+        s = cv2.getTrackbarPos('s', self.window_name)
+        v = cv2.getTrackbarPos('v', self.window_name)
+        h2 = cv2.getTrackbarPos('h2', self.window_name)
+        s2 = cv2.getTrackbarPos('s2', self.window_name)
+        v2 = cv2.getTrackbarPos('v2', self.window_name)
+
+        return h, s, v, h2, s2, v2
+
+class HsvSegmentationPrediction:
+
+    def __init__(self, images, model):
+        self.images = images
+        self.model = model
+        self.hsv_segmentation = HsvSegmentation()
+
+    def predict(self, h, s, v, h2, s2, v2):
+        self.hsv_segmentation.col1 = (h,s,v)
+        self.hsv_segmentation.col2 = (h2, s2, v2)
+        # segment all
+        #predict all
+
+def calibrate_colour(images, model, target_class):
+    hsv_seg_pred = HsvSegmentationPrediction()
+
+    bnds = ((0.25, 0.75), (0, 2.0))
+    res = scipy.optimize.minimize(hsv_seg_pred.predict, (2, 0), method='TNC', bounds=bnds, tol=1e-10)
+    print(res.x)
