@@ -69,13 +69,13 @@ class HandsConfig(Config):
     IMAGES_PER_GPU = 2
 
     # Number of classes (including background)
-    NUM_CLASSES = 1 + 1  # Background + Hand
+    NUM_CLASSES = 1 + 4  # Background + Hand
 
     # Number of training steps per epoch
     STEPS_PER_EPOCH = 1000
 
     # Skip detections with < 90% confidence
-    DETECTION_MIN_CONFIDENCE = 0.8
+    DETECTION_MIN_CONFIDENCE = 0.7
 
 
 ############################################################
@@ -93,21 +93,25 @@ class HandsDataset(utils.Dataset):
         # Train or validation dataset?
         assert subset in ["train", "val"]
         dataset_dir = os.path.join(dataset_dir, subset)
-        images_dir = os.path.join(dataset_dir, "images")
-        class_dirs = [f.path for f in os.scandir(images_dir) if f.is_dir()]
-        i = 0
-        for class_dir in class_dirs:
-            i = i + 1
-            class_name = os.path.basename(class_dir)
-            self.add_class("HandsDepthDataset", i, class_name)
 
-            for image_fpath in api.process_dir(class_dir,
-                                                api.common_image_file_extensions):
+        i = 0
+        class_names = []
+        for image_fpath in api.process_dir(dataset_dir, api.common_image_file_extensions):
+            class_name, is_mask = api.get_img_info(image_fpath)
+            if class_name is None:
+                continue
+            if class_name not in class_names:
+                class_names.append(class_name)
+                self.add_class("HandsDepthDataset", len(class_names), class_name)
+            cls_id = class_names.index(class_name) + 1
+
+            if is_mask is False:
+                i = i + 1
                 self.add_image(
                     "HandsDepthDataset",
-                    image_id=image_fpath,  # use file name as a unique image id
+                    image_id=i,  # use file name as a unique image id
                     path=image_fpath,
-                    cls_id=i)
+                    cls_id=cls_id)
 
     def load_mask(self, image_id):
         """Generate instance masks for an image.
@@ -117,7 +121,8 @@ class HandsDataset(utils.Dataset):
         class_ids: a 1D array of class IDs of the instance masks.
         """
         image_info = self.image_info[image_id]
-        mask_path = image_info["path"].replace("images", "masks")
+        image_fpath_part1, image_fpath_ext = os.path.splitext(image_info["path"])
+        mask_path = image_fpath_part1 + ".mask" + image_fpath_ext
         mask = skimage.color.rgb2gray(skimage.io.imread(mask_path))
         mask.shape = (mask.shape[0], mask.shape[1], 1)
         class_ids = np.array([image_info["cls_id"]])
@@ -189,6 +194,10 @@ def detect_and_color_splash(model, image_path=None, video_path=None):
             images.append(image_path)
 
         for image_path in images:
+            class_name, is_mask = api.get_img_info(image_path)
+            if is_mask:
+                print("Mask detected {}. Skipping".format(image_path))
+                continue
             # Run model detection and generate the color splash effect
             print("Running on {}".format(image_path))
             # Read image
