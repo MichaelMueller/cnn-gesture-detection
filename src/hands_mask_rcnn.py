@@ -97,7 +97,7 @@ class HandsDataset(utils.Dataset):
         i = 0
         class_names = []
         for image_fpath in api.process_dir(dataset_dir, api.common_image_file_extensions):
-            class_name, is_mask = api.get_img_info(image_fpath)
+            _, class_name, is_mask = api.get_img_info(image_fpath)
             if class_name is None:
                 continue
             if class_name not in class_names:
@@ -194,7 +194,7 @@ def detect_and_color_splash(model, image_path=None, video_path=None):
             images.append(image_path)
 
         for image_path in images:
-            class_name, is_mask = api.get_img_info(image_path)
+            _, class_name, is_mask = api.get_img_info(image_path)
             if is_mask:
                 print("Mask detected {}. Skipping".format(image_path))
                 continue

@@ -68,7 +68,7 @@ def setup_logging(log_level, log_file=None):
 
 
 def find_biggest_contour(thresholded_image):
-    _, contours, hierarchy = cv2.findContours(thresholded_image.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+    contours, hierarchy = cv2.findContours(thresholded_image.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
 
     if len(contours) != 0:
         # draw in blue the contours that were founded
@@ -189,7 +189,7 @@ def load_images_masks(dpath, use_masks=False, image_size=128, divisor=255.0):
     images = []
     labels = []
     for fpath in process_dir(dpath, common_image_file_extensions):
-        class_name, is_mask = get_img_info(fpath)
+        _, class_name, is_mask = get_img_info(fpath)
         if use_masks and is_mask is False:
             print("Skipping {} because it is no mask".format(fpath))
             continue
@@ -214,7 +214,7 @@ def load_images_masks(dpath, use_masks=False, image_size=128, divisor=255.0):
 
 
 def get_img_info(fpath):
-    parts = fpath.split('.')
+    parts = os.path.basename(fpath).split('.')
     class_name = None
     is_mask = False
     parts_len = len(parts)
@@ -225,7 +225,7 @@ def get_img_info(fpath):
                 class_name = parts[parts_len - 3]
         else:
             class_name = parts[parts_len - 2]
-    return class_name, is_mask
+    return parts[0], class_name, is_mask
 
 
 def blur_and_open_mask(mask, gaussian_blur_size=3, opening_kernel_size=3):

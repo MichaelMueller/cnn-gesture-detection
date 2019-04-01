@@ -11,7 +11,7 @@ parser.add_argument('num_classes', type=int, help='the number of classes to lear
 parser.add_argument('--cam', type=int, default=0, help='the number of the camera to use')
 parser.add_argument('--width', type=int, default=0, help='the number of the camera to use')
 parser.add_argument('--height', type=int, default=0, help='the number of the camera to use')
-parser.add_argument('--exposure', type=int, default=-7, help='the exposure level')
+parser.add_argument('--exposure', type=float, default=None, help='the exposure level')
 parser.add_argument('--timeout', type=int, default=500, help='timeout between Frames in milliseconds')
 parser.add_argument('--clean', action='store_true', default=False,
                     help='whether to remove train and test dir before running')
